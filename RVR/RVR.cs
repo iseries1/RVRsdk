@@ -247,6 +247,9 @@ namespace RVR
                 response.Confidence = 0;
             }
 
+            AccX.Text = string.Format("{0:f2}", response.SensorX);
+            AccY.Text = string.Format("{0:f2}", response.SensorY);
+            AccZ.Text = string.Format("{0:f2}", response.SensorZ);
         }
 
         private void SetAllLEDs(object sender, EventArgs e)
@@ -407,10 +410,10 @@ namespace RVR
         {
             Commands c = new Commands();
 
-            Message x = c.get_motor_temperature(MotorIndexesEnum.left_motor_index);
+            Message x = c.get_motor_temperature(MotorIndexesEnum.left_motor_index+3);
             Send(x);
 
-            x = c.get_motor_temperature(MotorIndexesEnum.right_motor_index);
+            x = c.get_motor_temperature(MotorIndexesEnum.right_motor_index+3);
 
             Send(x);
         }
@@ -433,6 +436,84 @@ namespace RVR
             System.Threading.Thread.Sleep(500);
 
             x = c.enable_color_detection_notify(false, 0, 0);
+            Send(x);
+
+            x = c.enable_color_detection(false);
+            Send(x);
+        }
+
+        private void DoStreaming(object sender, EventArgs e)
+        {
+            Commands c = new Commands();
+            RvrStreamingServices s = new RvrStreamingServices();
+            Message x;
+
+            response.Sensor = Streaming.SelectedIndex;
+
+            switch (Streaming.SelectedIndex)
+            {
+
+                case 0:
+                    x = c.configure_streaming_service(s.quaternion.Token, s.quaternion.Packet(), s.quaternion.Processor);
+                    SensorLabel.Text = "Quaternion";
+                    break;
+                case 1:
+                    x = c.configure_streaming_service(s.imu.Token, s.imu.Packet(), s.imu.Processor);
+                    SensorLabel.Text = "IMU";
+                    break;
+                case 2:
+                    x = c.configure_streaming_service(s.accelerometer.Token, s.accelerometer.Packet(), s.accelerometer.Processor);
+                    SensorLabel.Text = "Accelerometer";
+                    break;
+                case 3:
+                    x = c.configure_streaming_service(s.color_detection.Token, s.color_detection.Packet(), s.color_detection.Processor);
+                    SensorLabel.Text = "Color";
+                    break;
+                case 4:
+                    x = c.configure_streaming_service(s.gyroscope.Token, s.gyroscope.Packet(), s.gyroscope.Processor);
+                    SensorLabel.Text = "Gyroscope";
+                    break;
+                case 5:
+                    x = c.configure_streaming_service(s.locator.Token, s.locator.Packet(), s.locator.Processor);
+                    SensorLabel.Text = "Locator";
+                    break;
+                case 6:
+                    x = c.configure_streaming_service(s.velocity.Token, s.velocity.Packet(), s.velocity.Processor);
+                    SensorLabel.Text = "Velocity";
+                    break;
+                case 7:
+                    x = c.configure_streaming_service(s.speed.Token, s.speed.Packet(), s.speed.Processor);
+                    SensorLabel.Text = "Speed";
+                    break;
+                case 8:
+                    x = c.configure_streaming_service(s.core_time_1.Token, s.core_time_1.Packet(), s.core_time_1.Processor);
+                    SensorLabel.Text = "Core Time";
+                    break;
+                case 9:
+                    x = c.configure_streaming_service(s.ambient_light.Token, s.ambient_light.Packet(), s.ambient_light.Processor);
+                    SensorLabel.Text = "Ambient Light";
+                    break;
+                default:
+                    x = null;
+                    SensorLabel.Text = "N/A";
+                    break;
+            }
+
+            Send(x);
+
+            x = c.enable_color_detection(true);
+            Send(x);
+
+            x = c.start_streaming_service(900, SpheroRvrTargets.primary);
+            Send(x);
+            x = c.start_streaming_service(900, SpheroRvrTargets.secondary);
+            Send(x);
+
+            System.Threading.Thread.Sleep(1000);
+
+            x = c.clear_streaming_service(SpheroRvrTargets.secondary);
+            Send(x);
+            x = c.clear_streaming_service(SpheroRvrTargets.primary);
             Send(x);
 
             x = c.enable_color_detection(false);

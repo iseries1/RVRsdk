@@ -379,6 +379,17 @@ namespace RVR
             return v;
         }
 
+        public uint unpack_uint32()
+        {
+            int p = bindex;
+
+            uint v = (uint)(body[p]) << 24 | (uint)(body[p + 1]) << 16 | (uint)(body[p + 2]) << 8 | (uint)body[p + 3];
+
+            bindex = bindex + 4;
+
+            return v;
+        }
+
         public UInt64 unpack_uint64()
         {
             int p = bindex;

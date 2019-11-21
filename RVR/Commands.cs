@@ -442,7 +442,7 @@ namespace RVR
 
         public Message get_motor_temperature(byte motor_index)
         {
-            Message m = new Message(DevicesEnum.sensor, CommandsEnum.get_motor_temperature, SpheroRvrTargets.secondary);
+            Message m = new Message(DevicesEnum.sensor, CommandsEnum.get_temperature, SpheroRvrTargets.secondary);
             m.request_response(true);
             m.Pack(motor_index);
 

@@ -83,6 +83,12 @@
             this.Error = new System.Windows.Forms.Label();
             this.BGetColors = new System.Windows.Forms.Button();
             this.XColor = new System.Windows.Forms.Label();
+            this.BStreaming = new System.Windows.Forms.Button();
+            this.Streaming = new System.Windows.Forms.ComboBox();
+            this.AccZ = new System.Windows.Forms.Label();
+            this.SensorLabel = new System.Windows.Forms.Label();
+            this.AccX = new System.Windows.Forms.Label();
+            this.AccY = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Serial
@@ -387,7 +393,7 @@
             // LMotorFault
             // 
             this.LMotorFault.AutoSize = true;
-            this.LMotorFault.Location = new System.Drawing.Point(571, 75);
+            this.LMotorFault.Location = new System.Drawing.Point(535, 77);
             this.LMotorFault.Name = "LMotorFault";
             this.LMotorFault.Size = new System.Drawing.Size(63, 13);
             this.LMotorFault.TabIndex = 41;
@@ -396,7 +402,7 @@
             // MotorFault
             // 
             this.MotorFault.AutoSize = true;
-            this.MotorFault.Location = new System.Drawing.Point(652, 75);
+            this.MotorFault.Location = new System.Drawing.Point(616, 77);
             this.MotorFault.Name = "MotorFault";
             this.MotorFault.Size = new System.Drawing.Size(27, 13);
             this.MotorFault.TabIndex = 42;
@@ -454,7 +460,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(535, 164);
+            this.label3.Location = new System.Drawing.Point(593, 165);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(86, 13);
             this.label3.TabIndex = 48;
@@ -462,7 +468,7 @@
             // 
             // Heading
             // 
-            this.Heading.Location = new System.Drawing.Point(627, 161);
+            this.Heading.Location = new System.Drawing.Point(538, 162);
             this.Heading.Name = "Heading";
             this.Heading.Size = new System.Drawing.Size(52, 20);
             this.Heading.TabIndex = 49;
@@ -481,7 +487,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(571, 104);
+            this.label4.Location = new System.Drawing.Point(535, 106);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(60, 13);
             this.label4.TabIndex = 51;
@@ -490,7 +496,7 @@
             // MotorStall
             // 
             this.MotorStall.AutoSize = true;
-            this.MotorStall.Location = new System.Drawing.Point(652, 101);
+            this.MotorStall.Location = new System.Drawing.Point(616, 103);
             this.MotorStall.Name = "MotorStall";
             this.MotorStall.Size = new System.Drawing.Size(27, 13);
             this.MotorStall.TabIndex = 52;
@@ -602,11 +608,82 @@
             this.XColor.TabIndex = 63;
             this.XColor.Text = "N/A";
             // 
+            // BStreaming
+            // 
+            this.BStreaming.Location = new System.Drawing.Point(441, 381);
+            this.BStreaming.Name = "BStreaming";
+            this.BStreaming.Size = new System.Drawing.Size(75, 48);
+            this.BStreaming.TabIndex = 64;
+            this.BStreaming.Text = "Start Streaming";
+            this.BStreaming.UseVisualStyleBackColor = true;
+            this.BStreaming.Click += new System.EventHandler(this.DoStreaming);
+            // 
+            // Streaming
+            // 
+            this.Streaming.FormattingEnabled = true;
+            this.Streaming.Items.AddRange(new object[] {
+            "Quaternion",
+            "IMU",
+            "Accelerometer",
+            "Color",
+            "Gyroscope",
+            "Locator",
+            "Velocity",
+            "Speed",
+            "Core Time",
+            "Ambient Light"});
+            this.Streaming.Location = new System.Drawing.Point(538, 384);
+            this.Streaming.Name = "Streaming";
+            this.Streaming.Size = new System.Drawing.Size(108, 21);
+            this.Streaming.TabIndex = 65;
+            // 
+            // AccZ
+            // 
+            this.AccZ.AutoSize = true;
+            this.AccZ.Location = new System.Drawing.Point(732, 416);
+            this.AccZ.Name = "AccZ";
+            this.AccZ.Size = new System.Drawing.Size(27, 13);
+            this.AccZ.TabIndex = 66;
+            this.AccZ.Text = "N/A";
+            // 
+            // SensorLabel
+            // 
+            this.SensorLabel.AutoSize = true;
+            this.SensorLabel.Location = new System.Drawing.Point(535, 416);
+            this.SensorLabel.Name = "SensorLabel";
+            this.SensorLabel.Size = new System.Drawing.Size(27, 13);
+            this.SensorLabel.TabIndex = 67;
+            this.SensorLabel.Text = "N/A";
+            // 
+            // AccX
+            // 
+            this.AccX.AutoSize = true;
+            this.AccX.Location = new System.Drawing.Point(619, 416);
+            this.AccX.Name = "AccX";
+            this.AccX.Size = new System.Drawing.Size(27, 13);
+            this.AccX.TabIndex = 68;
+            this.AccX.Text = "N/A";
+            // 
+            // AccY
+            // 
+            this.AccY.AutoSize = true;
+            this.AccY.Location = new System.Drawing.Point(678, 416);
+            this.AccY.Name = "AccY";
+            this.AccY.Size = new System.Drawing.Size(27, 13);
+            this.AccY.TabIndex = 69;
+            this.AccY.Text = "N/A";
+            // 
             // RVR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.AccY);
+            this.Controls.Add(this.AccX);
+            this.Controls.Add(this.SensorLabel);
+            this.Controls.Add(this.AccZ);
+            this.Controls.Add(this.Streaming);
+            this.Controls.Add(this.BStreaming);
             this.Controls.Add(this.XColor);
             this.Controls.Add(this.BGetColors);
             this.Controls.Add(this.Error);
@@ -724,6 +801,12 @@
         private System.Windows.Forms.Label Error;
         private System.Windows.Forms.Button BGetColors;
         private System.Windows.Forms.Label XColor;
+        private System.Windows.Forms.Button BStreaming;
+        private System.Windows.Forms.ComboBox Streaming;
+        private System.Windows.Forms.Label AccZ;
+        private System.Windows.Forms.Label SensorLabel;
+        private System.Windows.Forms.Label AccX;
+        private System.Windows.Forms.Label AccY;
     }
 }
 

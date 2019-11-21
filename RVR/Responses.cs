@@ -49,14 +49,14 @@ namespace RVR
         public byte Blue;
         public byte Confidence;
         public byte ColorClassification;
-        public byte Token;
-        public byte[] SensorData;
-        public float CoalTemperature;
-        public float CaseTemperature;
         public float RightTemperature;
         public float LeftTemperature;
         public byte RightStatus;
         public byte LeftStatus;
+        public float SensorX;
+        public float SensorY;
+        public float SensorZ;
+        public int Sensor;
 
         public void doResponses(byte[] data, int size)
         {
@@ -223,12 +223,13 @@ namespace RVR
                     ColorClassification = m.unpack_byte();
                     break;
                 case CommandsEnum.streaming_service_data_notify:
-                    Token = m.unpack_byte();
-                    SensorData = m.unpack_bytes();
+                    Streaming();
                     break;
-                case CommandsEnum.get_motor_temperature:
-                    CoalTemperature = m.unpack_float();
-                    CaseTemperature = m.unpack_float();
+                case CommandsEnum.get_temperature:
+                    if (m.unpack_byte() == 3)
+                        LeftTemperature = m.unpack_float();
+                    else
+                        RightTemperature = m.unpack_float();
                     break;
                 case CommandsEnum.get_motor_thermal_protection_status:
                     LeftTemperature = m.unpack_float();
@@ -245,6 +246,105 @@ namespace RVR
                 default:
                     break;
             }
+        }
+
+        public void Streaming()
+        {
+            byte token = m.unpack_byte();
+            UInt32 x, y, z;
+
+
+            switch (Sensor)
+            {
+                case 0: //Quaterion
+                    x = m.unpack_uint32();
+                    x = m.unpack_uint32();
+                    y = m.unpack_uint32();
+                    z = m.unpack_uint32();
+                    SensorX = normalize(x, 1, -1);
+                    SensorY = normalize(y, 1, -1);
+                    SensorZ = normalize(z, 1, -1);
+                    break;
+                case 1: //IMU
+                    x = m.unpack_uint32();
+                    y = m.unpack_uint32();
+                    z = m.unpack_uint32();
+                    SensorX = normalize(x, 180, -180);
+                    SensorY = normalize(y, 90, -90);
+                    SensorZ = normalize(z, 180, -180);
+                    break;
+                case 2: //Acceleromter
+                    x = m.unpack_uint32();
+                    y = m.unpack_uint32();
+                    z = m.unpack_uint32();
+                    SensorX = normalize(x, 16, -16);
+                    SensorY = normalize(y, 16, -16);
+                    SensorZ = normalize(z, 16, -16);
+                    break;
+                case 3: //Color Detection
+                    x = m.unpack_byte();
+                    y = m.unpack_byte();
+                    z = m.unpack_byte();
+                    SensorX = x;
+                    SensorY = y;
+                    SensorZ = z;
+                    break;
+                case 4: //Gyroscope
+                    x = m.unpack_uint32();
+                    y = m.unpack_uint32();
+                    z = m.unpack_uint32();
+                    SensorX = normalize(x, 2000, -2000);
+                    SensorY = normalize(y, 2000, -2000);
+                    SensorZ = normalize(z, 2000, -2000);
+                    break;
+                case 5: //Locator
+                    x = m.unpack_uint32();
+                    y = m.unpack_uint32();
+                    z = 0;
+                    SensorX = normalize(x, 16000, -16000);
+                    SensorY = normalize(y, 16000, -16000);
+                    SensorZ = z;
+                    break;
+                case 6: //Velocity
+                    x = m.unpack_uint32();
+                    y = m.unpack_uint32();
+                    z = 0;
+                    SensorX = normalize(x, 5, -5);
+                    SensorY = normalize(y, 5, -5);
+                    SensorZ = z;
+                    break;
+                case 7: //Speed
+                    x = m.unpack_uint32();
+                    y = 0;
+                    z = 0;
+                    SensorX = normalize(x, 0, -5);
+                    SensorY = y;
+                    SensorZ = z;
+                    break;
+                case 8: //Core Time1
+                    x = m.unpack_uint32();
+                    y = m.unpack_uint32();
+                    z = 0;
+                    SensorX = x;
+                    SensorY = y;
+                    SensorZ = z;
+                    break;
+                case 9: //Ambient Light
+                    x = m.unpack_uint32();
+                    y = 0;
+                    z = 0;
+                    SensorX = (float)x/32767; // normalize(x, 0, 120000);
+                    SensorY = y;
+                    SensorZ = z;
+                    break;
+            }
+        }
+
+        private float normalize(UInt32 value, float OMax, float OMin)
+        {
+            float v = (float)(value) / 4294967295 * (OMax - OMin) + OMin;
+
+            return v;
         }
     }
 }
