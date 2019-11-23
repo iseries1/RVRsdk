@@ -5,11 +5,12 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.IO;
+using System.IO.Ports;
 
 namespace RVR
 {
@@ -23,8 +24,23 @@ namespace RVR
 
         public RVR()
         {
+            string[] RVRLeds = { "All LEDS", "Indication Left", "Indication Right", "Indication Right", "Headlight Left", "Headlight Right", "Battery Door Front",
+                                "Battery Door Rear", "Power Button Front", "Power Button Rear", "Brake Light Left", "Brake Light Right"};
+            string[] RVRColors = { "Red", "Green", "Blue", "White", "Yellow", "Purple", "Orange", "Pink", "Off" };
+
+            string[] RVRStreaming = {"Quaternion", "IMU", "Accelerometer", "Color", "Gyroscope", "Locator", "Velocity", "Speed", "Core Time", "Ambient Light"};
+
             InitializeComponent();
-            Serial.Open();
+
+            string[] ports = SerialPort.GetPortNames();
+            if (ports.Length > 0)
+            {
+                ComPort.Items.AddRange(ports);
+                ComPort.SelectedIndex = 0;
+            }
+            LEDS.Items.AddRange(RVRLeds);
+            LEDColor.Items.AddRange(RVRColors);
+            Streaming.Items.AddRange(RVRStreaming);
         }
 
         public void Send(Message m)
@@ -257,52 +273,77 @@ namespace RVR
             Commands c = new Commands();
             UInt32[] colors;
             UInt32 ledcolor = 0;
-            UInt32 l = RvrLedGroups.all_lights;
+            UInt32 L = 0;
 
-            if (LEDS.SelectedItem.Equals("All LEDS"))
-                l = RvrLedGroups.all_lights;
-            if (LEDS.SelectedItem.Equals("indication left"))
-                l = RvrLedGroups.status_indication_left;
-            if (LEDS.SelectedItem.Equals("indication right"))
-                l = RvrLedGroups.status_indication_right;
-            if (LEDS.SelectedItem.Equals("headlight left"))
-                l = RvrLedGroups.headlight_left;
-            if (LEDS.SelectedItem.Equals("headlight right"))
-                l = RvrLedGroups.headlight_right;
-            if (LEDS.SelectedItem.Equals("battery door front"))
-                l = RvrLedGroups.battery_door_front;
-            if (LEDS.SelectedItem.Equals("battery door rear"))
-                l = RvrLedGroups.battery_door_rear;
-            if (LEDS.SelectedItem.Equals("power button front"))
-                l = RvrLedGroups.power_button_front;
-            if (LEDS.SelectedItem.Equals("power button rear"))
-                l = RvrLedGroups.power_button_rear;
-            if (LEDS.SelectedItem.Equals("brakelight left"))
-                l = RvrLedGroups.brakelight_left;
-            if (LEDS.SelectedItem.Equals("brakelight right"))
-                l = RvrLedGroups.brakelight_right;
+            switch (LEDS.SelectedIndex)
+            {
+                case 0:
+                    L = RvrLedGroups.all_lights;
+                    break;
+                case 1:
+                    L = RvrLedGroups.status_indication_left;
+                    break;
+                case 2:
+                    L = RvrLedGroups.status_indication_right;
+                    break;
+                case 3:
+                    L = RvrLedGroups.headlight_left;
+                    break;
+                case 4:
+                    L = RvrLedGroups.headlight_right;
+                    break;
+                case 5:
+                    L = RvrLedGroups.battery_door_front;
+                    break;
+                case 6:
+                    L = RvrLedGroups.battery_door_rear;
+                    break;
+                case 7:
+                    L = RvrLedGroups.power_button_front;
+                    break;
+                case 8:
+                    L = RvrLedGroups.power_button_rear;
+                    break;
+                case 9:
+                    L = RvrLedGroups.brakelight_left;
+                    break;
+                case 10:
+                    L = RvrLedGroups.brakelight_right;
+                    break;
+            }
 
+            switch (LEDColor.SelectedIndex)
+            {
+                case 0:
+                    ledcolor = Colors.red;
+                    break;
+                case 1:
+                    ledcolor = Colors.green;
+                    break;
+                case 2:
+                    ledcolor = Colors.blue;
+                    break;
+                case 3:
+                    ledcolor = Colors.white;
+                    break;
+                case 4:
+                    ledcolor = Colors.yellow;
+                    break;
+                case 5:
+                    ledcolor = Colors.purple;
+                    break;
+                case 6:
+                    ledcolor = Colors.orange;
+                    break;
+                case 7:
+                    ledcolor = Colors.pink;
+                    break;
+                case 8:
+                    ledcolor = Colors.off;
+                    break;
+            }
 
-            if (LEDColor.SelectedItem.Equals("Red"))
-                ledcolor = Colors.red;
-            if (LEDColor.SelectedItem.Equals("Green"))
-                ledcolor = Colors.green;
-            if (LEDColor.SelectedItem.Equals("Blue"))
-                ledcolor = Colors.blue;
-            if (LEDColor.SelectedItem.Equals("White"))
-                ledcolor = Colors.white;
-            if (LEDColor.SelectedItem.Equals("Yellow"))
-                ledcolor = Colors.yellow;
-            if (LEDColor.SelectedItem.Equals("Purple"))
-                ledcolor = Colors.purple;
-            if (LEDColor.SelectedItem.Equals("Orange"))
-                ledcolor = Colors.orange;
-            if (LEDColor.SelectedItem.Equals("Pink"))
-                ledcolor = Colors.pink;
-            if (LEDColor.SelectedItem.Equals("Off"))
-                ledcolor = 0;
-
-            if (l == RvrLedGroups.all_lights)
+            if (L == RvrLedGroups.all_lights)
                 colors = new UInt32[10];
             else
                 colors = new UInt32[1];
@@ -310,7 +351,7 @@ namespace RVR
             for (int i = 0; i < colors.Length; i++)
                 colors[i] = ledcolor;
 
-            Message x = c.set_all_leds(l, colors);
+            Message x = c.set_all_leds(L, colors);
 
             Send(x);
         }
@@ -347,10 +388,17 @@ namespace RVR
 
             Send(x);
 
-            System.Threading.Thread.Sleep(1000);
+            Thread.Sleep(1000);
 
             x = c.raw_motors(RawMotorModesEnum.forward, 0, RawMotorModesEnum.forward, 0);
+            Send(x);
 
+            Thread.Sleep(1000);
+
+            x = c.raw_motors(RawMotorModesEnum.reverse, 64, RawMotorModesEnum.reverse, 64);
+            Send(x);
+
+            x = c.raw_motors(RawMotorModesEnum.forward, 0, RawMotorModesEnum.forward, 0);
             Send(x);
         }
 
@@ -518,6 +566,23 @@ namespace RVR
 
             x = c.enable_color_detection(false);
             Send(x);
+        }
+
+        private void DoComPort(object sender, EventArgs e)
+        {
+            if (Serial.IsOpen)
+                Serial.Close();
+            Serial.PortName = ComPort.Text;
+            Serial.Open();
+        }
+
+        private void UpdatePorts(object sender, EventArgs e)
+        {
+            string[] ports = SerialPort.GetPortNames();
+            ComPort.Items.Clear();
+
+            if (ports.Length > 0)
+                ComPort.Items.AddRange(ports);
         }
     }
 

@@ -137,6 +137,7 @@ namespace RVR
         public const byte enable_robot_infrared_message_notify = 0x3E;
         public const byte send_infrared_message = 0x3F;
         public const byte get_motor_temperature = 0x42;
+        public const byte get_temperature = 0x4A;
         public const byte get_motor_thermal_protection_status = 0x4B;
         public const byte enable_motor_thermal_protection_status_notify = 0x4C;
         public const byte motor_thermal_protection_status_notify = 0x4D;
@@ -318,16 +319,9 @@ namespace RVR
         public const uint brakelight_right = SpheroRvrLedBitmasks.right_brakelight_red |
             SpheroRvrLedBitmasks.right_brakelight_green |
             SpheroRvrLedBitmasks.right_brakelight_blue;
-        public const uint all_lights = status_indication_left |
-            status_indication_right |
-            headlight_left |
-            headlight_right |
-            battery_door_front |
-            battery_door_rear |
-            power_button_front |
-            power_button_rear |
-            brakelight_left |
-            brakelight_right;
+        public const uint all_lights = status_indication_left | status_indication_right |
+            headlight_left | headlight_right | battery_door_front | battery_door_rear |
+            power_button_front | power_button_rear | brakelight_left | brakelight_right;
     }
 
     class RvrStreamingServices

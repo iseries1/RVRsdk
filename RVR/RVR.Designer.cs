@@ -89,6 +89,7 @@
             this.SensorLabel = new System.Windows.Forms.Label();
             this.AccX = new System.Windows.Forms.Label();
             this.AccY = new System.Windows.Forms.Label();
+            this.ComPort = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // Serial
@@ -212,16 +213,6 @@
             // LEDColor
             // 
             this.LEDColor.FormattingEnabled = true;
-            this.LEDColor.Items.AddRange(new object[] {
-            "Red",
-            "Blue",
-            "Green",
-            "White",
-            "Yellow",
-            "Purple",
-            "Orange",
-            "Pink",
-            "Off"});
             this.LEDColor.Location = new System.Drawing.Point(354, 127);
             this.LEDColor.Name = "LEDColor";
             this.LEDColor.Size = new System.Drawing.Size(70, 21);
@@ -251,7 +242,7 @@
             this.BMotorF.Name = "BMotorF";
             this.BMotorF.Size = new System.Drawing.Size(75, 23);
             this.BMotorF.TabIndex = 18;
-            this.BMotorF.Text = "Motor Fault";
+            this.BMotorF.Text = "Motor Fault?";
             this.BMotorF.UseVisualStyleBackColor = true;
             this.BMotorF.Click += new System.EventHandler(this.DoMotorFault);
             // 
@@ -421,7 +412,7 @@
             // Version
             // 
             this.Version.AutoSize = true;
-            this.Version.Location = new System.Drawing.Point(571, 37);
+            this.Version.Location = new System.Drawing.Point(535, 37);
             this.Version.Name = "Version";
             this.Version.Size = new System.Drawing.Size(27, 13);
             this.Version.TabIndex = 44;
@@ -476,11 +467,11 @@
             // 
             // BMotorStall
             // 
-            this.BMotorStall.Location = new System.Drawing.Point(441, 188);
+            this.BMotorStall.Location = new System.Drawing.Point(163, 183);
             this.BMotorStall.Name = "BMotorStall";
-            this.BMotorStall.Size = new System.Drawing.Size(75, 23);
+            this.BMotorStall.Size = new System.Drawing.Size(121, 23);
             this.BMotorStall.TabIndex = 50;
-            this.BMotorStall.Text = "Motor Stall";
+            this.BMotorStall.Text = "Enable Motor Stall";
             this.BMotorStall.UseVisualStyleBackColor = true;
             this.BMotorStall.Click += new System.EventHandler(this.DoMotorStall);
             // 
@@ -504,29 +495,17 @@
             // 
             // BMotorFault
             // 
-            this.BMotorFault.Location = new System.Drawing.Point(441, 220);
+            this.BMotorFault.Location = new System.Drawing.Point(303, 183);
             this.BMotorFault.Name = "BMotorFault";
-            this.BMotorFault.Size = new System.Drawing.Size(75, 23);
+            this.BMotorFault.Size = new System.Drawing.Size(121, 23);
             this.BMotorFault.TabIndex = 53;
-            this.BMotorFault.Text = "Motor Fault";
+            this.BMotorFault.Text = "Enable Motor Fault";
             this.BMotorFault.UseVisualStyleBackColor = true;
             this.BMotorFault.Click += new System.EventHandler(this.DoMotorFaultN);
             // 
             // LEDS
             // 
             this.LEDS.FormattingEnabled = true;
-            this.LEDS.Items.AddRange(new object[] {
-            "All LEDS",
-            "indication left",
-            "indication right",
-            "headlight left",
-            "headlight right",
-            "battery door front",
-            "battery door rear",
-            "power button front",
-            "power button rear",
-            "brakelight left",
-            "brakelight right"});
             this.LEDS.Location = new System.Drawing.Point(244, 127);
             this.LEDS.Name = "LEDS";
             this.LEDS.Size = new System.Drawing.Size(104, 21);
@@ -534,9 +513,9 @@
             // 
             // BAmbientLight
             // 
-            this.BAmbientLight.Location = new System.Drawing.Point(441, 249);
+            this.BAmbientLight.Location = new System.Drawing.Point(441, 191);
             this.BAmbientLight.Name = "BAmbientLight";
-            this.BAmbientLight.Size = new System.Drawing.Size(75, 42);
+            this.BAmbientLight.Size = new System.Drawing.Size(75, 37);
             this.BAmbientLight.TabIndex = 55;
             this.BAmbientLight.Text = "Ambient Light";
             this.BAmbientLight.UseVisualStyleBackColor = true;
@@ -545,7 +524,7 @@
             // AmbientLight
             // 
             this.AmbientLight.AutoSize = true;
-            this.AmbientLight.Location = new System.Drawing.Point(535, 264);
+            this.AmbientLight.Location = new System.Drawing.Point(545, 200);
             this.AmbientLight.Name = "AmbientLight";
             this.AmbientLight.Size = new System.Drawing.Size(27, 13);
             this.AmbientLight.TabIndex = 56;
@@ -553,9 +532,9 @@
             // 
             // BMotorTemp
             // 
-            this.BMotorTemp.Location = new System.Drawing.Point(441, 297);
+            this.BMotorTemp.Location = new System.Drawing.Point(441, 234);
             this.BMotorTemp.Name = "BMotorTemp";
-            this.BMotorTemp.Size = new System.Drawing.Size(75, 42);
+            this.BMotorTemp.Size = new System.Drawing.Size(75, 43);
             this.BMotorTemp.TabIndex = 57;
             this.BMotorTemp.Text = "Motor Temperature";
             this.BMotorTemp.UseVisualStyleBackColor = true;
@@ -564,7 +543,7 @@
             // LeftMotor
             // 
             this.LeftMotor.AutoSize = true;
-            this.LeftMotor.Location = new System.Drawing.Point(535, 307);
+            this.LeftMotor.Location = new System.Drawing.Point(535, 249);
             this.LeftMotor.Name = "LeftMotor";
             this.LeftMotor.Size = new System.Drawing.Size(27, 13);
             this.LeftMotor.TabIndex = 58;
@@ -573,7 +552,7 @@
             // RightMotor
             // 
             this.RightMotor.AutoSize = true;
-            this.RightMotor.Location = new System.Drawing.Point(607, 307);
+            this.RightMotor.Location = new System.Drawing.Point(581, 249);
             this.RightMotor.Name = "RightMotor";
             this.RightMotor.Size = new System.Drawing.Size(27, 13);
             this.RightMotor.TabIndex = 59;
@@ -591,7 +570,7 @@
             // 
             // BGetColors
             // 
-            this.BGetColors.Location = new System.Drawing.Point(441, 347);
+            this.BGetColors.Location = new System.Drawing.Point(441, 283);
             this.BGetColors.Name = "BGetColors";
             this.BGetColors.Size = new System.Drawing.Size(75, 28);
             this.BGetColors.TabIndex = 62;
@@ -602,7 +581,7 @@
             // XColor
             // 
             this.XColor.AutoSize = true;
-            this.XColor.Location = new System.Drawing.Point(535, 355);
+            this.XColor.Location = new System.Drawing.Point(535, 291);
             this.XColor.Name = "XColor";
             this.XColor.Size = new System.Drawing.Size(27, 13);
             this.XColor.TabIndex = 63;
@@ -610,7 +589,7 @@
             // 
             // BStreaming
             // 
-            this.BStreaming.Location = new System.Drawing.Point(441, 381);
+            this.BStreaming.Location = new System.Drawing.Point(441, 318);
             this.BStreaming.Name = "BStreaming";
             this.BStreaming.Size = new System.Drawing.Size(75, 48);
             this.BStreaming.TabIndex = 64;
@@ -621,18 +600,7 @@
             // Streaming
             // 
             this.Streaming.FormattingEnabled = true;
-            this.Streaming.Items.AddRange(new object[] {
-            "Quaternion",
-            "IMU",
-            "Accelerometer",
-            "Color",
-            "Gyroscope",
-            "Locator",
-            "Velocity",
-            "Speed",
-            "Core Time",
-            "Ambient Light"});
-            this.Streaming.Location = new System.Drawing.Point(538, 384);
+            this.Streaming.Location = new System.Drawing.Point(538, 321);
             this.Streaming.Name = "Streaming";
             this.Streaming.Size = new System.Drawing.Size(108, 21);
             this.Streaming.TabIndex = 65;
@@ -640,7 +608,7 @@
             // AccZ
             // 
             this.AccZ.AutoSize = true;
-            this.AccZ.Location = new System.Drawing.Point(732, 416);
+            this.AccZ.Location = new System.Drawing.Point(732, 353);
             this.AccZ.Name = "AccZ";
             this.AccZ.Size = new System.Drawing.Size(27, 13);
             this.AccZ.TabIndex = 66;
@@ -649,7 +617,7 @@
             // SensorLabel
             // 
             this.SensorLabel.AutoSize = true;
-            this.SensorLabel.Location = new System.Drawing.Point(535, 416);
+            this.SensorLabel.Location = new System.Drawing.Point(535, 353);
             this.SensorLabel.Name = "SensorLabel";
             this.SensorLabel.Size = new System.Drawing.Size(27, 13);
             this.SensorLabel.TabIndex = 67;
@@ -658,7 +626,7 @@
             // AccX
             // 
             this.AccX.AutoSize = true;
-            this.AccX.Location = new System.Drawing.Point(619, 416);
+            this.AccX.Location = new System.Drawing.Point(619, 353);
             this.AccX.Name = "AccX";
             this.AccX.Size = new System.Drawing.Size(27, 13);
             this.AccX.TabIndex = 68;
@@ -667,17 +635,28 @@
             // AccY
             // 
             this.AccY.AutoSize = true;
-            this.AccY.Location = new System.Drawing.Point(678, 416);
+            this.AccY.Location = new System.Drawing.Point(678, 353);
             this.AccY.Name = "AccY";
             this.AccY.Size = new System.Drawing.Size(27, 13);
             this.AccY.TabIndex = 69;
             this.AccY.Text = "N/A";
+            // 
+            // ComPort
+            // 
+            this.ComPort.FormattingEnabled = true;
+            this.ComPort.Location = new System.Drawing.Point(678, 34);
+            this.ComPort.Name = "ComPort";
+            this.ComPort.Size = new System.Drawing.Size(81, 21);
+            this.ComPort.TabIndex = 70;
+            this.ComPort.DropDown += new System.EventHandler(this.UpdatePorts);
+            this.ComPort.SelectedIndexChanged += new System.EventHandler(this.DoComPort);
             // 
             // RVR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ComPort);
             this.Controls.Add(this.AccY);
             this.Controls.Add(this.AccX);
             this.Controls.Add(this.SensorLabel);
@@ -807,6 +786,7 @@
         private System.Windows.Forms.Label SensorLabel;
         private System.Windows.Forms.Label AccX;
         private System.Windows.Forms.Label AccY;
+        private System.Windows.Forms.ComboBox ComPort;
     }
 }
 
