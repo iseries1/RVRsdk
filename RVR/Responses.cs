@@ -36,7 +36,7 @@ namespace RVR
         public byte MotorIndex;
         public bool MotorStall = false;
         public bool MotorFault = false;
-        public bool GyroMax = false;
+        public byte GyroMax = 0;
         public int InfaredReading = 0;
         public int RedChannel;
         public int BlueChannel;
@@ -104,6 +104,7 @@ namespace RVR
                     BPct = (int)m.unpack_byte();
                     break;
                 case CommandsEnum.will_sleep_notify:
+                    sleeping = true;
                     break;
                 case CommandsEnum.did_sleep_notify:
                     sleeping = true;
@@ -198,7 +199,7 @@ namespace RVR
             switch (m.cid())
             {
                 case CommandsEnum.gyro_max_notify:
-                    GyroMax = m.unpack_bool();
+                    GyroMax = m.unpack_byte();
                     break;
                 case CommandsEnum.get_bot_to_bot_infrared_readings:
                     InfaredReading = m.unpack_int32();
@@ -254,9 +255,9 @@ namespace RVR
             UInt32 x, y, z;
 
 
-            switch (Sensor)
+            switch (token)
             {
-                case 0: //Quaterion
+                case 1: //Quaterion
                     x = m.unpack_uint32();
                     x = m.unpack_uint32();
                     y = m.unpack_uint32();
@@ -265,7 +266,7 @@ namespace RVR
                     SensorY = normalize(y, 1, -1);
                     SensorZ = normalize(z, 1, -1);
                     break;
-                case 1: //IMU
+                case 2: //IMU
                     x = m.unpack_uint32();
                     y = m.unpack_uint32();
                     z = m.unpack_uint32();
@@ -273,7 +274,7 @@ namespace RVR
                     SensorY = normalize(y, 90, -90);
                     SensorZ = normalize(z, 180, -180);
                     break;
-                case 2: //Acceleromter
+                case 3: //Acceleromter
                     x = m.unpack_uint32();
                     y = m.unpack_uint32();
                     z = m.unpack_uint32();
@@ -281,7 +282,7 @@ namespace RVR
                     SensorY = normalize(y, 16, -16);
                     SensorZ = normalize(z, 16, -16);
                     break;
-                case 3: //Color Detection
+                case 4: //Color Detection
                     x = m.unpack_byte();
                     y = m.unpack_byte();
                     z = m.unpack_byte();
@@ -289,7 +290,7 @@ namespace RVR
                     SensorY = y;
                     SensorZ = z;
                     break;
-                case 4: //Gyroscope
+                case 5: //Gyroscope
                     x = m.unpack_uint32();
                     y = m.unpack_uint32();
                     z = m.unpack_uint32();
@@ -297,7 +298,7 @@ namespace RVR
                     SensorY = normalize(y, 2000, -2000);
                     SensorZ = normalize(z, 2000, -2000);
                     break;
-                case 5: //Locator
+                case 6: //Locator
                     x = m.unpack_uint32();
                     y = m.unpack_uint32();
                     z = 0;
@@ -305,7 +306,7 @@ namespace RVR
                     SensorY = normalize(y, 16000, -16000);
                     SensorZ = z;
                     break;
-                case 6: //Velocity
+                case 7: //Velocity
                     x = m.unpack_uint32();
                     y = m.unpack_uint32();
                     z = 0;
@@ -313,7 +314,7 @@ namespace RVR
                     SensorY = normalize(y, 5, -5);
                     SensorZ = z;
                     break;
-                case 7: //Speed
+                case 8: //Speed
                     x = m.unpack_uint32();
                     y = 0;
                     z = 0;
@@ -321,7 +322,7 @@ namespace RVR
                     SensorY = y;
                     SensorZ = z;
                     break;
-                case 8: //Core Time1
+                case 9: //Core Time1
                     x = m.unpack_uint32();
                     y = m.unpack_uint32();
                     z = 0;
@@ -329,7 +330,7 @@ namespace RVR
                     SensorY = y;
                     SensorZ = z;
                     break;
-                case 9: //Ambient Light
+                case 10: //Ambient Light
                     x = m.unpack_uint32();
                     y = 0;
                     z = 0;

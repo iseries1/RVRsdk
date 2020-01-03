@@ -15,6 +15,14 @@ namespace RVR
             return m;
         }
 
+        public Message shutdown(byte wait)
+        {
+            Message m = new Message(DevicesEnum.power, CommandsEnum.shutdown, SpheroRvrTargets.primary);
+            m.Pack(wait);
+
+            return m;
+        }
+
         public Message wake()
         {
             Message m = new Message(DevicesEnum.power, CommandsEnum.wake, SpheroRvrTargets.primary);
@@ -273,7 +281,7 @@ namespace RVR
         {
             Message m = new Message(DevicesEnum.sensor, CommandsEnum.enable_gyro_max_notify, SpheroRvrTargets.secondary);
             m.Pack(is_enabled);
-
+            
             return m;
         }
 

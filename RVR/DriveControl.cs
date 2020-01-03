@@ -15,8 +15,6 @@ namespace RVR
 
     class DriveControl
     {
-        bool _isAiming;
-
         public void aimStart()
         {
 

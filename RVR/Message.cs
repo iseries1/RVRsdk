@@ -218,7 +218,7 @@ namespace RVR
             b[index++] = (byte)(checksum(b, index) ^ 0xff);
 
             b = escape_buffer(b);
-            byte[] r = new byte[256];
+            byte[] r = new byte[index+2];
 
             r[0] = Packet.START_OF_PACKET;
             for (int i = 0; i < index; i++)

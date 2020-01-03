@@ -27,6 +27,8 @@ namespace RVR
     }
     class ErrorCode
     {
+        private static string[] Error = {"No Error", "Bad Command ID", "Bad Data Length", "Bad Data Value", "Bad Device ID", "Bad Transaction ID",
+            "Device Busy", "Command Failed", "Not Yet Implemented", "Restricted", "Target Unavailable" };
         public const byte success = 0x00;
         public const byte bad_did = 0x01;
         public const byte bad_cid = 0x02;
@@ -38,10 +40,16 @@ namespace RVR
         public const byte busy = 0x08;
         public const byte bad_tid = 0x09;
         public const byte target_unavailable = 0x0A;
+        public static string Text(int e)
+        {
+            return Error[e];
+        }
     }
 
     class Colors
     {
+        public static string[] RVRColors = { "Red", "Green", "Blue", "White", "Yellow", "Purple", "Orange", "Pink", "Off" };
+
         public const uint red = 0xFF0000;
         public const uint green = 0x00FF00;
         public const uint blue = 0x0000FF;
@@ -86,6 +94,7 @@ namespace RVR
         public const byte get_motor_fault_state = 0x29;
         // power did=0x13
         public const byte sleep = 0x01;
+        public const byte shutdown = 0x00;
         public const byte wake = 0x0D;
         public const byte get_battery_percentage = 0x10;
         public const byte did_awake_notify = 0x11;
@@ -227,10 +236,15 @@ namespace RVR
 
     class BatteryVoltageStatesEnum
     {
+        private static string[] States = { "Unknown", "Ok", "Low", "Critical" };
         public const byte unknown = 0;
         public const byte ok = 1;
         public const byte low = 2;
         public const byte critical = 3;
+        public static string Text(int v)
+        {
+            return States[v];
+        }
     }
 
     class BatteryVoltageReadingTypesEnum
@@ -289,6 +303,9 @@ namespace RVR
 
     class RvrLedGroups
     {
+        public static string[] RVRLeds = { "All LEDS", "Indication Left", "Indication Right", "Headlight Left", "Headlight Right", "Battery Door Front",
+                                "Battery Door Rear", "Power Button Front", "Power Button Rear", "Brake Light Left", "Brake Light Right"};
+
         public const uint status_indication_left = SpheroRvrLedBitmasks.left_status_indication_red |
             SpheroRvrLedBitmasks.left_status_indication_green |
             SpheroRvrLedBitmasks.left_status_indication_blue;
@@ -326,17 +343,17 @@ namespace RVR
 
     class RvrStreamingServices
     {
-        public RVRSensors color_detection = new RVRSensors("ColorDetection", 1, 0x03, SpheroRvrTargets.primary, StreamingDataSizesEnum.eight_bit);
-        public RVRSensors ambient_light = new RVRSensors("AmbientLight", 2, 0x0a, SpheroRvrTargets.primary, StreamingDataSizesEnum.thirty_two_bit);
+        public RVRSensors color_detection = new RVRSensors("ColorDetection", 4, 0x03, SpheroRvrTargets.primary, StreamingDataSizesEnum.eight_bit);
+        public RVRSensors ambient_light = new RVRSensors("AmbientLight", 10, 0x0a, SpheroRvrTargets.primary, StreamingDataSizesEnum.thirty_two_bit);
         public RVRSensors quaternion = new RVRSensors("Quaternion", 1, 0x00, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
-        public RVRSensors imu = new RVRSensors("IMU", 1, 0x01, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
-        public RVRSensors accelerometer = new RVRSensors("Accelerometer", 1, 0x02, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
-        public RVRSensors gyroscope = new RVRSensors("Gyroscope", 1, 0x04, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
-        public RVRSensors locator = new RVRSensors("Locator", 2, 0x06, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
-        public RVRSensors velocity = new RVRSensors("Velocity", 2, 0x07, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
-        public RVRSensors speed = new RVRSensors("Speed", 2, 0x08, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
-        public RVRSensors core_time_1 = new RVRSensors("CoreTime 1", 3, 0x09, SpheroRvrTargets.primary, StreamingDataSizesEnum.thirty_two_bit);
-        public RVRSensors core_time_2 = new RVRSensors("CoreTime 2", 3, 0x09, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
+        public RVRSensors imu = new RVRSensors("IMU", 2, 0x01, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
+        public RVRSensors accelerometer = new RVRSensors("Accelerometer", 3, 0x02, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
+        public RVRSensors gyroscope = new RVRSensors("Gyroscope", 5, 0x04, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
+        public RVRSensors locator = new RVRSensors("Locator", 6, 0x06, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
+        public RVRSensors velocity = new RVRSensors("Velocity", 7, 0x07, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
+        public RVRSensors speed = new RVRSensors("Speed", 8, 0x08, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
+        public RVRSensors core_time_1 = new RVRSensors("CoreTime 1", 9, 0x09, SpheroRvrTargets.primary, StreamingDataSizesEnum.thirty_two_bit);
+        public RVRSensors core_time_2 = new RVRSensors("CoreTime 2", 9, 0x09, SpheroRvrTargets.secondary, StreamingDataSizesEnum.thirty_two_bit);
     }
 
     class RVRSensors

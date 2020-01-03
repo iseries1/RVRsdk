@@ -90,6 +90,20 @@
             this.AccX = new System.Windows.Forms.Label();
             this.AccY = new System.Windows.Forms.Label();
             this.ComPort = new System.Windows.Forms.ComboBox();
+            this.BRLocator = new System.Windows.Forms.Button();
+            this.BSLocator = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.MaxGyro = new System.Windows.Forms.Label();
+            this.BShutdown = new System.Windows.Forms.Button();
+            this.BInfraredBot = new System.Windows.Forms.Button();
+            this.BInfraredBroadcasting = new System.Windows.Forms.Button();
+            this.LNear = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.NearChannel = new System.Windows.Forms.CheckedListBox();
+            this.FarChannel = new System.Windows.Forms.CheckedListBox();
+            this.BStartFollowing = new System.Windows.Forms.Button();
+            this.BStopBroadcasting = new System.Windows.Forms.Button();
+            this.BStopFollowing = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Serial
@@ -100,7 +114,7 @@
             // 
             // bWake
             // 
-            this.bWake.Location = new System.Drawing.Point(213, 32);
+            this.bWake.Location = new System.Drawing.Point(236, 32);
             this.bWake.Name = "bWake";
             this.bWake.Size = new System.Drawing.Size(75, 23);
             this.bWake.TabIndex = 0;
@@ -562,7 +576,7 @@
             // 
             this.Error.AutoSize = true;
             this.Error.ForeColor = System.Drawing.Color.Red;
-            this.Error.Location = new System.Drawing.Point(160, 416);
+            this.Error.Location = new System.Drawing.Point(25, 428);
             this.Error.Name = "Error";
             this.Error.Size = new System.Drawing.Size(27, 13);
             this.Error.TabIndex = 61;
@@ -651,11 +665,178 @@
             this.ComPort.DropDown += new System.EventHandler(this.UpdatePorts);
             this.ComPort.SelectedIndexChanged += new System.EventHandler(this.DoComPort);
             // 
+            // BRLocator
+            // 
+            this.BRLocator.Location = new System.Drawing.Point(163, 220);
+            this.BRLocator.Name = "BRLocator";
+            this.BRLocator.Size = new System.Drawing.Size(121, 23);
+            this.BRLocator.TabIndex = 71;
+            this.BRLocator.Text = "Reset Locator";
+            this.BRLocator.UseVisualStyleBackColor = true;
+            this.BRLocator.Click += new System.EventHandler(this.DoResetLocator);
+            // 
+            // BSLocator
+            // 
+            this.BSLocator.Location = new System.Drawing.Point(303, 220);
+            this.BSLocator.Name = "BSLocator";
+            this.BSLocator.Size = new System.Drawing.Size(121, 23);
+            this.BSLocator.TabIndex = 72;
+            this.BSLocator.Text = "Set Locator";
+            this.BSLocator.UseVisualStyleBackColor = true;
+            this.BSLocator.Click += new System.EventHandler(this.DoSetLocator);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(195, 91);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(121, 23);
+            this.button3.TabIndex = 73;
+            this.button3.Text = "Max Gyro Enable";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.DoEnableMaxGyro);
+            // 
+            // MaxGyro
+            // 
+            this.MaxGyro.AutoSize = true;
+            this.MaxGyro.Location = new System.Drawing.Point(331, 96);
+            this.MaxGyro.Name = "MaxGyro";
+            this.MaxGyro.Size = new System.Drawing.Size(27, 13);
+            this.MaxGyro.TabIndex = 74;
+            this.MaxGyro.Text = "N/A";
+            // 
+            // BShutdown
+            // 
+            this.BShutdown.Location = new System.Drawing.Point(155, 32);
+            this.BShutdown.Name = "BShutdown";
+            this.BShutdown.Size = new System.Drawing.Size(75, 23);
+            this.BShutdown.TabIndex = 75;
+            this.BShutdown.Text = "Shutdown";
+            this.BShutdown.UseVisualStyleBackColor = true;
+            this.BShutdown.Click += new System.EventHandler(this.DoShutdown);
+            // 
+            // BInfraredBot
+            // 
+            this.BInfraredBot.Location = new System.Drawing.Point(163, 254);
+            this.BInfraredBot.Name = "BInfraredBot";
+            this.BInfraredBot.Size = new System.Drawing.Size(121, 23);
+            this.BInfraredBot.TabIndex = 76;
+            this.BInfraredBot.Text = "Get Infrared Bot";
+            this.BInfraredBot.UseVisualStyleBackColor = true;
+            this.BInfraredBot.Click += new System.EventHandler(this.DoBotInfrared);
+            // 
+            // BInfraredBroadcasting
+            // 
+            this.BInfraredBroadcasting.Location = new System.Drawing.Point(163, 343);
+            this.BInfraredBroadcasting.Name = "BInfraredBroadcasting";
+            this.BInfraredBroadcasting.Size = new System.Drawing.Size(118, 23);
+            this.BInfraredBroadcasting.TabIndex = 77;
+            this.BInfraredBroadcasting.Text = "Start Broadcasting";
+            this.BInfraredBroadcasting.UseVisualStyleBackColor = true;
+            this.BInfraredBroadcasting.Click += new System.EventHandler(this.DoBroadcasting);
+            // 
+            // LNear
+            // 
+            this.LNear.AutoSize = true;
+            this.LNear.Location = new System.Drawing.Point(163, 288);
+            this.LNear.Name = "LNear";
+            this.LNear.Size = new System.Drawing.Size(75, 13);
+            this.LNear.TabIndex = 78;
+            this.LNear.Text = "Near Channel:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(163, 318);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(67, 13);
+            this.label5.TabIndex = 79;
+            this.label5.Text = "Far Channel:";
+            // 
+            // NearChannel
+            // 
+            this.NearChannel.ColumnWidth = 25;
+            this.NearChannel.FormattingEnabled = true;
+            this.NearChannel.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"});
+            this.NearChannel.Location = new System.Drawing.Point(244, 283);
+            this.NearChannel.MultiColumn = true;
+            this.NearChannel.Name = "NearChannel";
+            this.NearChannel.Size = new System.Drawing.Size(180, 19);
+            this.NearChannel.TabIndex = 80;
+            // 
+            // FarChannel
+            // 
+            this.FarChannel.ColumnWidth = 25;
+            this.FarChannel.FormattingEnabled = true;
+            this.FarChannel.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"});
+            this.FarChannel.Location = new System.Drawing.Point(244, 318);
+            this.FarChannel.MultiColumn = true;
+            this.FarChannel.Name = "FarChannel";
+            this.FarChannel.Size = new System.Drawing.Size(180, 19);
+            this.FarChannel.TabIndex = 81;
+            // 
+            // BStartFollowing
+            // 
+            this.BStartFollowing.Location = new System.Drawing.Point(303, 343);
+            this.BStartFollowing.Name = "BStartFollowing";
+            this.BStartFollowing.Size = new System.Drawing.Size(118, 23);
+            this.BStartFollowing.TabIndex = 82;
+            this.BStartFollowing.Text = "Start Following";
+            this.BStartFollowing.UseVisualStyleBackColor = true;
+            this.BStartFollowing.Click += new System.EventHandler(this.DoFollowing);
+            // 
+            // BStopBroadcasting
+            // 
+            this.BStopBroadcasting.Location = new System.Drawing.Point(163, 377);
+            this.BStopBroadcasting.Name = "BStopBroadcasting";
+            this.BStopBroadcasting.Size = new System.Drawing.Size(118, 23);
+            this.BStopBroadcasting.TabIndex = 83;
+            this.BStopBroadcasting.Text = "Stop Broadcasting";
+            this.BStopBroadcasting.UseVisualStyleBackColor = true;
+            this.BStopBroadcasting.Click += new System.EventHandler(this.DoStopBroadcasting);
+            // 
+            // BStopFollowing
+            // 
+            this.BStopFollowing.Location = new System.Drawing.Point(303, 377);
+            this.BStopFollowing.Name = "BStopFollowing";
+            this.BStopFollowing.Size = new System.Drawing.Size(118, 23);
+            this.BStopFollowing.TabIndex = 84;
+            this.BStopFollowing.Text = "Stop Following";
+            this.BStopFollowing.UseVisualStyleBackColor = true;
+            this.BStopFollowing.Click += new System.EventHandler(this.DoStopFollowing);
+            // 
             // RVR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.BStopFollowing);
+            this.Controls.Add(this.BStopBroadcasting);
+            this.Controls.Add(this.BStartFollowing);
+            this.Controls.Add(this.FarChannel);
+            this.Controls.Add(this.NearChannel);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.LNear);
+            this.Controls.Add(this.BInfraredBroadcasting);
+            this.Controls.Add(this.BInfraredBot);
+            this.Controls.Add(this.BShutdown);
+            this.Controls.Add(this.MaxGyro);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.BSLocator);
+            this.Controls.Add(this.BRLocator);
             this.Controls.Add(this.ComPort);
             this.Controls.Add(this.AccY);
             this.Controls.Add(this.AccX);
@@ -787,6 +968,20 @@
         private System.Windows.Forms.Label AccX;
         private System.Windows.Forms.Label AccY;
         private System.Windows.Forms.ComboBox ComPort;
+        private System.Windows.Forms.Button BRLocator;
+        private System.Windows.Forms.Button BSLocator;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label MaxGyro;
+        private System.Windows.Forms.Button BShutdown;
+        private System.Windows.Forms.Button BInfraredBot;
+        private System.Windows.Forms.Button BInfraredBroadcasting;
+        private System.Windows.Forms.Label LNear;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckedListBox NearChannel;
+        private System.Windows.Forms.CheckedListBox FarChannel;
+        private System.Windows.Forms.Button BStartFollowing;
+        private System.Windows.Forms.Button BStopBroadcasting;
+        private System.Windows.Forms.Button BStopFollowing;
     }
 }
 
